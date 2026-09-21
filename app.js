@@ -23,6 +23,20 @@ app.post("/assignments", async (req, res) => {
     }
 });
 
+// GET /assignments
+app.get("/assignments", async (req, res) => {
+    try {
+        const result = await pool.query(
+            "SELECT * FROM assignments ORDER BY id DESC"
+        );
+
+        res.status(200).json(result.rows);
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ message: "Server error" });
+    }
+});
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
